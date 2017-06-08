@@ -27,17 +27,17 @@ class PoiRequest extends Request
 
             'name'                  =>'required',
             'surname'               =>'required',
-            'gender'                =>'required|not_in:0',
-            'weight'                =>'required|numeric',
-            'email'                 =>'email',
-            //'nationality'           =>'required|not_in:0',
-            //'document_type'         =>'required|not_in:0'
-           /* 'id_number'             =>'digits:13',*/
-          'language'              =>'required|not_in:0',
-          'position'              =>'required|not_in:0',
-            'poi_profile_file'      =>'mimes:jpeg',
+//            'gender'                =>'required|not_in:0',
+//            'weight'                =>'required|numeric',
+//            'email'                 =>'email',
+//            //'nationality'           =>'required|not_in:0',
+//            //'document_type'         =>'required|not_in:0'
+//           /* 'id_number'             =>'digits:13',*/
+//          'language'              =>'required|not_in:0',
+//          'position'              =>'required|not_in:0',
+//            'poi_profile_file'      =>'mimes:jpeg',
             'profile_pic_note'     =>'required',
-            'tax_number'          =>'required|numeric',
+//            'tax_number'          =>'required|numeric',
 
 //            'has_driver_licence'    =>'required|not_in:0'
             

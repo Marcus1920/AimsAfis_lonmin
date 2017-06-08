@@ -61,11 +61,13 @@
                                             {!! Form::file('poi_profile_file') !!}
                                         </span>
                                         <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">Remove</a>
+
                                     </div>
                                 </div>
 
                                 <label>Notes</label>
                                 <input type="text" name="profile_pic_note"  class="form-control input-sm m-b-3"/>
+                                @if ($errors->has('profile_pic_note')) <p class="help-block red">*{{ $errors->first('profile_pic_note') }}</p> @endif
 
                             </div>
                            
@@ -80,14 +82,14 @@
 
                             {!! Form::label('First Name', 'First Name', array('class' => '')) !!}
                             {!! Form::text('name',NULL,['class' => 'form-control input-sm m-b-10','id' => 'name']) !!}
-                           
+                            @if ($errors->has('name')) <p class="help-block red">*{{ $errors->first('name') }}</p> @endif
 
                         </div>
                         <div class="col-md-4">
 
                             {!! Form::label('Surname', 'Surname', array('class' => '')) !!}
                             {!! Form::text('surname',NULL,['class' => 'form-control input-sm m-b-10','id' => 'surname']) !!}
-
+                            @if ($errors->has('surname')) <p class="help-block red">*{{ $errors->first('surname') }}</p> @endif
                         </div>
 
                        <div class="col-md-4">
@@ -101,6 +103,7 @@
                             {!! Form::label('Gender', 'Gender', array('class' => '')) !!}
                             {!! Form::select('gender',['1' => 'Male','2' => 'Female' ],1,['class' => 'form-control input-sm' ,'id' => 'role']) !!}
 
+                              @if ($errors->has('gender')) <p class="help-block red">*{{ $errors->first('gender') }}</p> @endif
                         </div>
 
                         <div class="col-md-4">
@@ -112,7 +115,7 @@
                         <div class="col-md-4">
                             {!! Form::label('Weight', 'Weight', array('class' => '')) !!}
                             {!! Form::text('weight',NULL,['class' => 'form-control input-sm m-b-10','id' => 'weight']) !!}
-
+                            @if ($errors->has('weight')) <p class="help-block red">*{{ $errors->first('weight') }}</p> @endif
                         </div>
 
                         <div class="col-md-4">
@@ -126,7 +129,7 @@
 
                             {!! Form::label('Birth Place', 'Birth Place', array('class' => '')) !!}
                             {!! Form::text('birth_place',NULL,['class' => 'form-control input-sm m-b-10','id' => 'birth_place']) !!}
-
+                            @if ($errors->has('birth_place')) <p class="help-block red">*{{ $errors->first('birth_place') }}</p> @endif
                         </div>
 
                         <div class="col-md-4">
@@ -141,7 +144,7 @@
                             <div class="col-md-4">
                                 {!! Form::label('Language Spoken', 'Language Spoken', array('class' => '')) !!}
                                 {!! Form::select('language',$selectLanguages,0,['class' => 'form-control input-sm m-b-10' ,'id' => 'language']) !!}
-                              
+                                @if ($errors->has('language')) <p class="help-block red">*{{ $errors->first('language') }}</p> @endif
                             </div>
 
 
@@ -155,7 +158,7 @@
                             <div class="col-md-4">
                                 {!! Form::label('Tax Number', 'Tax Number', array('class' => '')) !!}
                                 {!! Form::text('tax_number',NULL,['class' => 'form-control input-sm m-b-10','id' => 'tax_number']) !!}
-
+                                @if ($errors->has('tax_number')) <p class="help-block red">*{{ $errors->first('tax_number') }}</p> @endif
                             </div>
                         </div>
                         <div class="row">
@@ -169,8 +172,9 @@
 
                                 {!! Form::label('Position', 'Position', array('class' => '')) !!}
                                 {!! Form::select('position',$selectPositions,0,['class' => 'form-control input-sm m-b-10' ,'id' => 'position']) !!}
-                              
-                            </div>
+                                 @if ($errors->has('position')) <p class="help-block red">*{{ $errors->first('position') }}</p> @endif
+
+                             </div>
 
                              <div class="col-md-4">
                                 

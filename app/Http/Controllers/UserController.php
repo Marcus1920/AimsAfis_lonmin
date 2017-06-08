@@ -1637,7 +1637,7 @@ class UserController extends Controller
      if ($request['email']==null)
      {
 
-       $email  =  \Auth::user()->id."" .$request['surname']."@aimsfis.com";
+       $email  = $request['surname'].'@aimsfis.com';
      }
      else {
        $email =    $request['email'];

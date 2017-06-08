@@ -46,9 +46,9 @@ class CasesController extends Controller
      *
      * @return Response
      */
-	 
-	
-	 
+
+
+
     public function index($id)
     {
 
@@ -98,8 +98,8 @@ class CasesController extends Controller
                     )
                 )
                 ->groupBy('cases.id');
-				
-				
+
+
 
         } else {
 
@@ -275,7 +275,7 @@ class CasesController extends Controller
 
             return \Datatables::of($cases)
                 ->addColumn('actions', '<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchCaseModal({{$id}},1);" data-target=".modalCase">View</a>
-                                                    
+
                                                    <a class="btn btn-xs btn-alt" data-toggle="modal" href="view-case-poi-associates/{{ $id }}" target="_blank">View POI association chart</a>
 
                                                     ')
@@ -550,11 +550,11 @@ class CasesController extends Controller
                 'typeStatus' => $request['typeStatus']
             );
 
-         $details = CaseReport::where('id' , '=',$request['caseID'] )->first() ; 
+         $details = CaseReport::where('id' , '=',$request['caseID'] )->first() ;
 		 $details->status = 7;
-		 $details->save() ; 
-		 
-		 
+		 $details->save() ;
+
+
             $caseActivity = New CaseActivity();
             $caseActivity->case_id = $request['caseID'];
             $caseActivity->user = $to;
@@ -570,16 +570,16 @@ class CasesController extends Controller
 			$caseEscalationObj->description = $details->description;
 			$caseEscalationObj->category = $details->case_type;
 			$caseEscalationObj->sub_category =  $details->case_sub_type;
-			
-			
+
+
 			$caseEscalationObj->investigation_officer = $details->investigation_officer;
 			$caseEscalationObj->investigation_cell =  $details->investigation_cell;
 			$caseEscalationObj->investigation_email =  $details->investigation_email;
 			$caseEscalationObj->status = 7;
-			
-			
-			
-			
+
+
+
+
 	    $caseEscalationObj->start    = date("Y-m-d");
 	    $caseEscalationObj->color    = "#4caf50";
 	    $caseEscalationObj->end = $request['due_date'];
@@ -638,15 +638,15 @@ class CasesController extends Controller
 	public function mobilecalendarListPerUser()
     {
 		$api_key  = \Input::get('api_key');
-		
+
 		$user  = User::where('api_key','=',$api_key )->first();
-		
+
      //  $events    = CaseEscalator::select('id','title','start','end','color', 'description' 'department' '' 'investigation_note'  'message' )->where('to','=',$user->id)->get();
         $events = \DB::table('cases_escalations')
-					
+
 						->join('categories','cases_escalations.category','=','categories.id')
 						->join('cases_statuses', 'cases_escalations.status', '=', 'cases_statuses.id')
-						
+
 					    ->join('sub_categories', 'cases_escalations.sub_category', '=', 'sub_categories.id')
                         ->where('to','=',$user->id)
                         ->select(\DB::raw( "
@@ -658,21 +658,21 @@ class CasesController extends Controller
 									cases_escalations.description,
 									cases_escalations.message,
 									cases_escalations.investigation_note,
-                                  
+
 									cases_statuses.name  as status,
-									
+
 									categories.name as category,
 									sub_categories.name as sub_category
 									")
 									)->get() ;
-                                   
-                             
-	   
-	   
+
+
+
+
 	   echo json_encode($events);
 
     }
-	
+
 
     public function addCasePoi(Request $request)
     {
@@ -1024,7 +1024,7 @@ class CasesController extends Controller
                                     cases.investigation_officer,
                                     cases.investigation_cell,
                                     cases.investigation_email,
-                                    cases.investigation_note,                   
+                                    cases.investigation_note,
                                     cases_statuses.name as status,
                                     IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporter,
                                     IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as household,
@@ -1064,7 +1064,7 @@ class CasesController extends Controller
                                     cases.investigation_officer,
                                     cases.investigation_cell,
                                     cases.investigation_email,
-                                    cases.investigation_note,  
+                                    cases.investigation_note,
                                     cases.client_reference_number,
                                     cases_statuses.name as status,
                                     cases_types.name as case_type,
@@ -1111,7 +1111,7 @@ class CasesController extends Controller
                                     cases.investigation_officer,
                                     cases.investigation_cell,
                                     cases.investigation_email,
-                                    cases.investigation_note,  
+                                    cases.investigation_note,
                                     cases.client_reference_number,
                                     cases_statuses.name as status,
                                     cases_types.name as case_type,
@@ -1151,7 +1151,7 @@ class CasesController extends Controller
                                     cases.investigation_officer,
                                     cases.investigation_cell,
                                     cases.investigation_email,
-                                    cases.investigation_note, 
+                                    cases.investigation_note,
                                     cases.client_reference_number,
                                     cases_statuses.name as status,
                                     cases_types.name as case_type,
@@ -1365,23 +1365,23 @@ class CasesController extends Controller
         $case_type = ($request['case_type'] == 0) ? 5 : $request['case_type'];
         $case_sub_type = ($request['case_sub_type'] == 0) ? 7 : $request['case_sub_type'];
         $house_holder_obj = User::find($house_holder_id);
-	
+
 	$officer;
-	
+
 	if($request['officers'] == 0){
 		$investigationOfficer  			= new InvestigationOfficer();
 		$investigationOfficer->name		= $request['investigation_officer'];
 		$investigationOfficer->email 		= $request['investigation_email'];
 		$investigationOfficer->cellphone 	= $request['investigation_cell'];
 		$investigationOfficer->save();
-		
+
 		$officer = $request['investigation_officer'];
 	}else{
 		$officerObj = InvestigationOfficer::find($request['officers']);
 		$officer = $officerObj->name;
 	}
-	
-	
+
+
 
         $newCase = New CaseReport();
         $newCase->created_at = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
@@ -1398,6 +1398,7 @@ class CasesController extends Controller
         $newCase->investigation_email = $request['investigation_email'];
         $newCase->investigation_note = $request['investigation_note'];
         $newCase->client_reference_number = $request['client_reference_number'];
+        $newCase->rate_value =$request['rate_value'];
         $newCase->status = 1;
         $newCase->addressbook = 0;
         $newCase->source = 3;
@@ -1419,13 +1420,13 @@ class CasesController extends Controller
         $caseOwner->type = 0;
         $caseOwner->active = 1;
         $caseOwner->save();
-		
+
 	$caseNote          = new CaseNote();
         $caseNote->note    = $request['investigation_note'];;
         $caseNote->user    = \Auth::user()->id;
         $caseNote->case_id = $newCase->id;
         $caseNote->save();
-	
+
         $destinationFolder = 'files/case_' . $newCase->id;
 
         if (!\File::exists($destinationFolder)) {

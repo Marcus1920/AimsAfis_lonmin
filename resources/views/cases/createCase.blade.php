@@ -26,7 +26,7 @@
                   </div>
                 </div>
 
-                
+
                 <div class="form-group">
                     {!! Form::label('Cell Number', 'Cell Number', array('class' => 'col-md-3 control-label')) !!}
                     <div class="col-md-6">
@@ -61,14 +61,14 @@
                     </div>
                 </div>
 
-              
+
 
             <hr class="whiter m-t-20">
             <hr class="whiter m-b-20">
 
             <div class="form-group">
               {!! Form::label('Enter Address', 'Enter Address', array('class' => 'col-md-3 control-label')) !!}
-              <div class="col-md-6">     
+              <div class="col-md-6">
                 {!! Form::text('autocomplete',NULL,['class' => 'form-control input-sm','id' => 'autocomplete', "onfocus"=>"geolocate()"]) !!}
 
               </div>
@@ -77,7 +77,7 @@
 
             <div class="form-group">
               {!! Form::label('Street Number', 'Street Number', array('class' => 'col-md-3 control-label')) !!}
-              <div class="col-md-6">     
+              <div class="col-md-6">
                 {!! Form::text('street_number',NULL,['class' => 'street_number form-control input-sm','id' => 'street_number']) !!}
 
               </div>
@@ -86,7 +86,7 @@
 
             <div class="form-group">
               {!! Form::label('Route', 'Route', array('class' => 'col-md-3 control-label')) !!}
-              <div class="col-md-6">     
+              <div class="col-md-6">
                 {!! Form::text('route',NULL,['class' => 'route form-control input-sm','id' => 'route']) !!}
 
               </div>
@@ -95,7 +95,7 @@
 
             <div class="form-group">
               {!! Form::label('Locality', 'Locality', array('class' => 'col-md-3 control-label')) !!}
-              <div class="col-md-6">     
+              <div class="col-md-6">
                 {!! Form::text('locality',NULL,['class' => 'locality form-control input-sm','id' => 'locality']) !!}
 
               </div>
@@ -104,7 +104,7 @@
 
             <div class="form-group">
               {!! Form::label('Area', 'Area', array('class' => 'col-md-3 control-label')) !!}
-              <div class="col-md-6">     
+              <div class="col-md-6">
                 {!! Form::text('administrative_area_level_1',NULL,['class' => 'administrative_area_level_1 form-control input-sm','id' => 'administrative_area_level_1']) !!}
 
               </div>
@@ -114,7 +114,7 @@
 
             <div class="form-group">
               {!! Form::label('Postal Code', 'Postal Code', array('class' => 'col-md-3 control-label')) !!}
-              <div class="col-md-6">     
+              <div class="col-md-6">
                 {!! Form::text('postal_code',NULL,['class' => 'postal_code form-control input-sm','id' => 'postal_code']) !!}
 
               </div>
@@ -123,7 +123,7 @@
 
                <div class="form-group">
               {!! Form::label('Country', 'Country', array('class' => 'col-md-3 control-label')) !!}
-              <div class="col-md-6">     
+              <div class="col-md-6">
                 {!! Form::text('country',NULL,['class' => 'country form-control input-sm','id' => 'country']) !!}
 
               </div>
@@ -131,6 +131,8 @@
 
                 <hr class="whiter m-t-20">
                 <hr class="whiter m-b-20">
+
+
 
                 <div class="form-group">
                   {!! Form::label('Client Reference Number', 'Client Reference Number', array('class' => 'col-md-3 control-label')) !!}
@@ -155,14 +157,23 @@
                     <div id = "hse_error_saps_case_number"></div>
                   </div>
                 </div>
-		
+
+                <div class="form-group">
+                  {!! Form::label('Rate Value', 'Rate Value', array('class' => 'col-md-3 control-label')) !!}
+                  <div class="col-md-6">
+                    {!! Form::text('rate_value',NULL,['class' => 'form-control input-sm','id' => 'rate_value']) !!}
+                    <div id = "hse_error_client_reference_number"></div>
+                  </div>
+                </div>
+
+
 		<div class="form-group">
                     {!! Form::label('Investigation Officer', 'Investigation Officer', array('class' => 'col-md-3 control-label')) !!}
                     <div class="col-md-6">
                         <div class="input-group">
 				{!! Form::select('officers',$selectOfficers,0,['class' => 'form-control input-sm' ,'name' => 'case_type[]','id' => 'officers']) !!}
 				<div class="input-group-addon" id="add_officer" title="Add New" style="cursor:pointer;">
-					<span class="glyphicon glyphicon-plus"></span> 
+					<span class="glyphicon glyphicon-plus"></span>
 				</div>
 			</div>
                     </div>

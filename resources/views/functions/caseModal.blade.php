@@ -10,7 +10,7 @@
 	      $("#CreateCaseAgentForm #investigation_cell").removeAttr("disabled");
 	      $("#CreateCaseAgentForm #investigation_email").removeAttr("disabled");
       });
-      
+
       $("#officers").change(function(){
 	      var officer = $("#CreateCaseAgentForm #officers option:selected").text();
 	      $("#txtOfficer").addClass("hidden");
@@ -25,7 +25,7 @@
 
 			  if(data[0] !== null)
 			  {
-			     
+
 			     $("#CreateCaseAgentForm #investigation_cell").val(data[0].cellphone);
 			     $("#CreateCaseAgentForm #investigation_email").val(data[0].email);
 			  }
@@ -36,7 +36,7 @@
 
 		     }
                })
-	     
+
       });
 
       $("#allocationCaseForm #department").change(function(){
@@ -358,19 +358,19 @@
             var newWindow = window.open();
 
             if (r == true) {
-    
+
               var doc_ref = document.location.href;
               var doc_url = doc_ref.substring( 0, doc_ref.indexOf( "home")) ;
               doc_url+= "add-poi-user";
               //$("#anchorID").attr("href",doc_url);
               //document.getElementById("anchorID").click();
               newWindow.location = doc_url;
-              
 
-     
-                                               
+
+
+
             }
-           
+
 
           }
 
@@ -383,7 +383,7 @@
     });
 
 
-  $("#caseReportCaseForm #hsecellphone,#CreateCaseAgentForm #hsecellphone").tokenInput("getHouseHolder", 
+  $("#caseReportCaseForm #hsecellphone,#CreateCaseAgentForm #hsecellphone").tokenInput("getHouseHolder",
 
   {
       tokenLimit: 1,
@@ -795,7 +795,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
 
               if (results.length == 0)
               {
-               
+
               }
               return results;
       },
@@ -2246,8 +2246,8 @@ $("#submitAssociatePoiForm").on("click",function(){
 
   $("#submitCreateCaseAgentForm").on("click",function(){
 
-        
-      
+
+
         var house_holder_id             = $("#CreateCaseAgentForm #hseHolderId").val();
         var cellphone                   = $("#CreateCaseAgentForm #cellphone").val();
         var name                        = $("#CreateCaseAgentForm #name").val();
@@ -2255,11 +2255,12 @@ $("#submitAssociatePoiForm").on("click",function(){
         var client_reference_number     = $("#CreateCaseAgentForm #client_reference_number").val();
         var saps_case_number            = $("#CreateCaseAgentForm #saps_case_number").val();
         var saps_station                = $("#CreateCaseAgentForm #saps_station").val();
-	var officers			= $("#CreateCaseAgentForm #officers").val();
+	      var officers			              = $("#CreateCaseAgentForm #officers").val();
+        var  rate_value                 = $("#CreateCaseAgentForm  #rate_value").val() ;
         var investigation_officer       = $("#CreateCaseAgentForm #investigation_officer").val();
         var investigation_cell          = $("#CreateCaseAgentForm #investigation_cell").val();
         var investigation_email         = $("#CreateCaseAgentForm #investigation_email").val();
-        var investigation_note          = $("#CreateCaseAgentForm #investigation_note").val();      
+        var investigation_note          = $("#CreateCaseAgentForm #investigation_note").val();
         var country                     = $("#CreateCaseAgentForm #country").val();
         var case_type                   = $("#CreateCaseAgentForm #case_type").val();
         var case_sub_type               = $("#CreateCaseAgentForm #case_sub_type").val();
@@ -2282,7 +2283,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                                   locality:locality,
                                   administrative_area_level_1:administrative_area_level_1,
                                   postal_code:postal_code,
-                                  country:country,                             
+                                  country:country,
                                   house_holder_id:house_holder_id,
                                   description:description,
                                   cellphone:cellphone,
@@ -2298,9 +2299,10 @@ $("#submitAssociatePoiForm").on("click",function(){
                                   case_type:case_type,
                                   case_sub_type:case_sub_type,
                                   company:company,
+                                  rate_value:rate_value,
                                   gpsAddressLat:gpsAddressLat,
                                   gpsAddressLong:gpsAddressLong,
-				  officers:officers
+				                          officers:officers
 
                                 };
 
@@ -2339,11 +2341,11 @@ $("#submitAssociatePoiForm").on("click",function(){
 
         error: function(data) {
 
-               
-                    HoldOn.close();           
+
+                    HoldOn.close();
                     $("#hse_error_type").html("");
                     $("#hse_error_sub_type").html("");
-                    
+
 
                     if (data.responseJSON.case_type)
                     {
@@ -2978,12 +2980,12 @@ $("#submitAssociatePoiForm").on("click",function(){
                      $("#modalCase #administrative_area_level_1").val(data[0].administrative_area_level_1);
                      $("#modalCase #postal_code").val(data[0].postal_code);
                      $("#modalCase #country").val(data[0].country);
-                     
 
 
 
 
-                     
+
+
 
                      $("#modalCase #launchUpdateUserModalField").attr("data-id",data[0].reporteID);
                      $("#modalCase #launchUpdateUserModalHouse").attr("data-id",data[0].house_holder_id);
@@ -3748,7 +3750,7 @@ $("#submitAssociatePoiForm").on("click",function(){
     function launchUpdateUserModal(id)
     {
 
-    
+
        var url = "";
        var url = "{{ Request::path() }}";
 
@@ -3898,8 +3900,8 @@ $("#submitAssociatePoiForm").on("click",function(){
                                             poiID:poiID,
                                             poi_associate:poi_associate,
                                             poi_association_type:poi_association_type
-                                          
-                                         
+
+
 
                                   };
 
@@ -3914,13 +3916,13 @@ $("#submitAssociatePoiForm").on("click",function(){
             $('#addAssociateForm')[0].reset();
 
             location.reload();
-           
+
 
           }
 
         }
 
-      
+
 
 
     })
@@ -3931,6 +3933,3 @@ $("#submitAssociatePoiForm").on("click",function(){
 
 
     </script>
-
-
-

@@ -1052,6 +1052,7 @@ class UserController extends Controller
                 $uniqueNodes[$object->id] = $object;
             }
 
+
             $nodeFinal = array();
             foreach ($uniqueNodes as $item) {
 

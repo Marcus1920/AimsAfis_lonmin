@@ -680,7 +680,7 @@ class CasesController extends Controller
         $contacts = explode(',', $request['pois']);
         foreach ($contacts as $contact) {
 
-            $poi = Poi::where('email', '=', $contact)->first();
+            $poi = Poi::where('first_name', '=', $contact)->first();
 
 
             $casepoi = New CasePoi();

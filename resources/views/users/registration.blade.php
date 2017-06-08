@@ -124,7 +124,7 @@
             <div class="form-group">
               {!! Form::label('Street Number', 'Street Number', array('class' => 'col-md-2 control-label')) !!}
               <div class="col-md-6">
-                {!! Form::text('street_number',NULL,['class' => 'street_number form-control input-sm','id' => 'street_number']) !!}
+                {!! Form::text('street_number',NULL,['class' => 'street_number form-control input-sm','id' => 'street_number' , 'required']) !!}
 
               </div>
             </div>
@@ -132,7 +132,7 @@
             <div class="form-group">
               {!! Form::label('Route', 'Route', array('class' => 'col-md-2 control-label')) !!}
               <div class="col-md-6">
-                {!! Form::text('route',NULL,['class' => 'route form-control input-sm','id' => 'route']) !!}
+                {!! Form::text('route',NULL,['class' => 'route form-control input-sm','id' => 'route' , 'required']) !!}
 
               </div>
             </div>
@@ -140,7 +140,7 @@
             <div class="form-group">
               {!! Form::label('Locality', 'Locality', array('class' => 'col-md-2 control-label')) !!}
               <div class="col-md-6">
-                {!! Form::text('locality',NULL,['class' => 'locality form-control input-sm','id' => 'locality']) !!}
+                {!! Form::text('locality',NULL,['class' => 'locality form-control input-sm','id' => 'locality' , 'required']) !!}
 
               </div>
             </div>
@@ -148,15 +148,15 @@
             <div class="form-group">
               {!! Form::label('Area', 'Area', array('class' => 'col-md-2 control-label')) !!}
               <div class="col-md-6">
-                {!! Form::text('administrative_area_level_1',NULL,['class' => 'administrative_area_level_1 form-control input-sm','id' => 'administrative_area_level_1']) !!}
+                {!! Form::text('administrative_area_level_1',NULL,['class' => 'administrative_area_level_1 form-control input-sm','id' => 'administrative_area_level_1', 'required']) !!}
 
               </div>
             </div>
 
             <div class="form-group">
-              {!! Form::label('Postal Code', 'Postal Code', array('class' => 'col-md-2 control-label')) !!}
+              {!! Form::label('Postal Code', 'Postal Code', array('class' => 'col-md-2 control-label' , 'required' )) !!}
               <div class="col-md-6">
-                {!! Form::text('postal_code',NULL,['class' => 'postal_code form-control input-sm','id' => 'postal_code']) !!}
+                {!! Form::text('postal_code',NULL,['class' => 'postal_code form-control input-sm','id' => 'postal_code' , 'required']) !!}
 
               </div>
             </div>
@@ -164,7 +164,7 @@
              <div class="form-group">
               {!! Form::label('Country', 'Country', array('class' => 'col-md-2 control-label')) !!}
               <div class="col-md-6">
-                {!! Form::text('country',NULL,['class' => 'country form-control input-sm','id' => 'country']) !!}
+                {!! Form::text('country',NULL,['class' => 'country form-control input-sm','id' => 'country' , 'required']) !!}
 
               </div>
             </div>

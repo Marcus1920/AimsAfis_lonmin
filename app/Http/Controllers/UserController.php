@@ -334,13 +334,13 @@ class UserController extends Controller
         }
 
 
-       
+
     }
 
 
     public function getPoisAssociates($id,$responseJson = TRUE)
     {
-        
+
         $response             = array();
         $responseNodes        = array();
         $responseLinks        = array();
@@ -368,7 +368,7 @@ class UserController extends Controller
     public function getCasePoisAssociates($case_id,$responseJson = TRUE)
     {
 
-        
+
         $response             = array();
         $responseNodes        = array();
         $responseLinks        = array();
@@ -379,7 +379,7 @@ class UserController extends Controller
         $nodeObj->nodes       = array_merge($responseNodes,$response["nodes"]);
         $nodeObj->links       = array_merge($responseLinks,$response["links"]);
 
-        
+
         if($responseJson) {
 
            return \Response::json($nodeObj);
@@ -396,8 +396,8 @@ class UserController extends Controller
     public function getPoiCaseAssociates($case_id,$responseJson = TRUE,$poi_id)
     {
 
-      
-       
+
+
         $response             = array();
         $responseNodes        = array();
         $responseLinks        = array();
@@ -420,11 +420,11 @@ class UserController extends Controller
         }
 
 
-       
+
         $nodeObj->nodes       = $nodes_array["nodes"];
         $nodeObj->links       = $nodes_array["links"];
 
-        
+
         if($responseJson) {
 
            return \Response::json($nodeObj);
@@ -453,22 +453,22 @@ class UserController extends Controller
 
     public function main_poi_cases_associate($poi_id,$responseNodes,$responseLinks) {
 
-       
+
         $result           = array();
         $poi              = Poi::find($poi_id);
         $poipicture       = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',1)->first();
         $associates_nodes = array();
-        
+
 
         if(sizeof($poi) > 0) {
-          
+
           $userObj          = new \stdClass();
           $userObj->id      = "m-".$poi->id;
           $userObj->name    = $poi->name." ".$poi->surname;
           $userObj->picture = $poipicture->poi_picture_url;
-          $userObj->type    = "MAIN"; 
+          $userObj->type    = "MAIN";
           $userObj->loaded  = TRUE;
-          $responseNodes[]  = $userObj;   
+          $responseNodes[]  = $userObj;
           $main["nodes"]    = $responseNodes;
           $main["links"]    = $responseLinks;
 
@@ -492,13 +492,13 @@ class UserController extends Controller
 
             $associates_nodes["links"] = array_merge($poi_cases_associations["links"],$main["links"]);
 
-        
+
         } else {
 
             $associates_nodes["links"] = array_merge($main["links"]);
 
         }
-        
+
 
 
          return $associates_nodes;
@@ -531,9 +531,9 @@ class UserController extends Controller
             $responseNodes[] = $result["nodeObj"];
             $responseLinks[] = $result["linkObj"];
 
-        
-         
-        
+
+
+
         }
 
 
@@ -544,21 +544,21 @@ class UserController extends Controller
         foreach ($nodes as $node) {
 
              foreach ($node as $value) {
-               
+
                  $n[] = $value;
              }
-                 
-                    
+
+
           }
 
         foreach ($links as $link) {
 
              foreach ($link as $value) {
-               
+
                  $l[] = $value;
              }
-           
-              
+
+
          }
 
           $uniqueNodes = array();
@@ -596,7 +596,7 @@ class UserController extends Controller
         $response["links"] = $linkFinal;
 
 
-     
+
 
         } else {
 
@@ -607,13 +607,13 @@ class UserController extends Controller
         }
 
 
-    
+
         return $response;
 
 
-          
 
-         
+
+
 
 
 
@@ -621,23 +621,23 @@ class UserController extends Controller
 
       }
 
-    
+
 
 
     public function get_poi_cases_associatios($poi_id) {
 
 
 
-      $objCasePoiAssociates = CasePoi::where('poi_id',$poi_id)->get();//59,56  
+      $objCasePoiAssociates = CasePoi::where('poi_id',$poi_id)->get();//59,56
 
 
-      
+
       $responseNodes        = array();
       $responseLinks        = array();
       $response             = array();
       $nodes                = array();
       $links                = array();
-     
+
 
       $count = 0;
 
@@ -657,54 +657,54 @@ class UserController extends Controller
                   //get all people related to that cases
 
                   if(sizeof($poi_associates) > 0) {
-                    
+
                     $nodes[]  = $poi_associates['nodes'];
                     $links[]  = $poi_associates['links'];
 
-                  } 
+                  }
 
-    
-                 
+
+
                   $count++;
 
-                
-              
+
+
             }
 
-           
+
 
             $nodes[] = $responseNodes;
             $links[] = $responseLinks;
 
-            
-
-          
 
 
 
 
-     
 
 
-    
+
+
+
+
+
              foreach ($nodes as $node) {
 
                  foreach ($node as $value) {
-                   
+
                      $n[] = $value;
                  }
-               
-                  
+
+
              }
 
             foreach ($links as $link) {
 
                  foreach ($link as $value) {
-                   
+
                      $l[] = $value;
                  }
-               
-                  
+
+
              }
 
             $uniqueNodes = array();
@@ -740,13 +740,13 @@ class UserController extends Controller
 
             }
 
-        
+
 
               $response["nodes"] = $nodeFinal;
               $response["links"] = $linkFinal;
 
 
-     
+
 
         } else {
 
@@ -757,7 +757,7 @@ class UserController extends Controller
         }
 
 
-    
+
         return $response;
 
 
@@ -766,12 +766,12 @@ class UserController extends Controller
     public function construct_poi_case_associate_object($CasePoiAssociate) {
 
 
-        
+
         $userObj             = new \stdClass();
         $userObj->id         = "c-m-".$CasePoiAssociate->case_id;
         $userObj->name       = "Case Number: ".$CasePoiAssociate->case_id;
         $userObj->picture    = "images/poi/profile/node-icons-case.png";
-        $userObj->type       = "Poi Association"; 
+        $userObj->type       = "Poi Association";
         $userObj->loaded     = TRUE;
         $linkObj             = new \stdClass();
         $linkObj->id         = $CasePoiAssociate->case_id;
@@ -783,7 +783,7 @@ class UserController extends Controller
 
 
         return $response;
-              
+
 
 
     }
@@ -801,14 +801,14 @@ class UserController extends Controller
         $case          = CaseReport::find($case_id);
 
         if(sizeof($case) > 0) {
-          
+
           $userObj          = new \stdClass();
           $userObj->id      = "c-m-".$case->id;
           $userObj->name    = "Case Number: ".$case->id;
           $userObj->picture = "images/poi/profile/node-icons-case.png";
-          $userObj->type    = "MAIN"; 
+          $userObj->type    = "MAIN";
           $userObj->loaded  = TRUE;
-          $responseNodes[]  = $userObj;   
+          $responseNodes[]  = $userObj;
           $main["nodes"]    = $responseNodes;
           $main["links"]    = $responseLinks;
 
@@ -819,7 +819,7 @@ class UserController extends Controller
 
 
 
-    
+
 
         if(sizeof($case_poi_associates["nodes"]) > 0) {
 
@@ -835,13 +835,13 @@ class UserController extends Controller
 
             $associates_nodes["links"] = array_merge($case_poi_associates["links"],$main["links"]);
 
-        
+
         } else {
 
             $associates_nodes["links"] = array_merge($main["links"]);
 
         }
-        
+
 
 
          return $associates_nodes;
@@ -869,8 +869,8 @@ class UserController extends Controller
 
             $associates_nodes["links"] = $case_poi_associates["links"];
 
-        
-        }  
+
+        }
 
 
          return $associates_nodes;
@@ -899,8 +899,8 @@ class UserController extends Controller
                   $poi_associates  = $this->getPoisAssociates($CasePoiAssociate->poi_id,FALSE);
                   $nodes[]         = array_merge($poi_associates['nodes']);
                   $links[]         = array_merge($poi_associates['links'],$responseLinks);
-                
-              
+
+
             }
 
 
@@ -934,11 +934,11 @@ class UserController extends Controller
             foreach ($links as $link) {
 
                  foreach ($link as $value) {
-                   
+
                      $l[] = $value;
                  }
-               
-                  
+
+
              }
 
             $uniqueLinks = array();
@@ -958,7 +958,7 @@ class UserController extends Controller
 
               $response["nodes"] = array_merge($nodeFinal);
               $response["links"] = array_merge($linkFinal);
-     
+
 
         } else {
 
@@ -979,7 +979,7 @@ class UserController extends Controller
 
 
 
-      $objCasePoiAssociates = CasePoi::where('case_id',$case_id)->where('poi_id','<>',$poi_id)->get(); 
+      $objCasePoiAssociates = CasePoi::where('case_id',$case_id)->where('poi_id','<>',$poi_id)->get();
 
 
       $responseNodes        = array();
@@ -996,52 +996,52 @@ class UserController extends Controller
                   $result          = $this->construct_case_associate_objects($CasePoiAssociate);
                   $responseNodes[] = $result["nodeObj"];
                   $responseLinks[] = $result["linkObj"];
-                  $poiCases        = array(); 
+                  $poiCases        = array();
                   $poiCases        = $this->getCasePois($CasePoiAssociate->case_id,$CasePoiAssociate->poi_id,$poi_id);
 
 
 
-                
-                 
-                  
+
+
+
 
                   if(sizeof($poiCases) > 0) {
-                  
-                  
+
+
                     $nodes[]          = $poiCases['nodes'];
                     $links[]          = $poiCases['links'];
                   }
 
-                 
 
-                
-              
+
+
+
             }
 
 
-           
+
           $n = array();
           $l = array();
-          
+
 
              foreach ($nodes as $node) {
 
                  foreach ($node as $value) {
-                   
+
                      $n[] = $value;
                  }
-               
-                  
+
+
              }
 
             foreach ($links as $link) {
 
                  foreach ($link as $value) {
-                   
+
                      $l[] = $value;
                  }
-               
-                  
+
+
              }
 
             $uniqueNodes = array();
@@ -1079,10 +1079,10 @@ class UserController extends Controller
             $response["nodes"] = $nodeFinal;
             $response["links"] = $linkFinal;
 
-          
 
-            
-     
+
+
+
 
         } else {
 
@@ -1092,7 +1092,7 @@ class UserController extends Controller
 
         }
 
-       
+
 
         return $response;
 
@@ -1104,15 +1104,15 @@ class UserController extends Controller
 
 
       //Get all case associates
-    
-      $cases               = CasePoi::where("case_id",$case_id)->where("poi_id",'<>',$poi_id)->get();   
+
+      $cases               = CasePoi::where("case_id",$case_id)->where("poi_id",'<>',$poi_id)->get();
       $parentResponseNodes = array();
       $parentResponseLinks = array();
       $associates_nodes    = array();
 
 
       foreach ($cases as $case) {
-        
+
 
              $response              = array();
              $poiObj                = Poi::find($case->poi_id);
@@ -1131,7 +1131,7 @@ class UserController extends Controller
              $parentResponseNodes[] = $userObj;
              $parentResponseLinks[] = $linkObj;
 
-             
+
              $childrenNodes         = $this->poi_associatios_cases($poiObj->id,$case->case_id);
 
              if(sizeof($childrenNodes) > 0) {
@@ -1153,7 +1153,7 @@ class UserController extends Controller
 
 
 
-            
+
 
 
       }
@@ -1173,15 +1173,15 @@ class UserController extends Controller
     }
 
 
-            
 
-      
+
+
 
     return $associates_nodes;
 
 
 
-    
+
     }
 
 
@@ -1205,7 +1205,7 @@ class UserController extends Controller
         $response["linkObj"] = $linkObj;
 
         return $response;
-              
+
 
 
     }
@@ -1218,17 +1218,17 @@ class UserController extends Controller
         $result        = array();
         $poi           = Poi::find($id);
         $poipicture    = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',1)->first();
-        
+
 
         if(sizeof($poi) > 0) {
-          
+
           $userObj          = new \stdClass();
           $userObj->id      = "m-".$poi->id;
           $userObj->name    = $poi->name." ".$poi->surname;
           $userObj->picture = $poipicture->poi_picture_url;
-          $userObj->type    = "MAIN"; 
+          $userObj->type    = "MAIN";
           $userObj->loaded  = TRUE;
-          $responseNodes[]  = $userObj;   
+          $responseNodes[]  = $userObj;
           $main["nodes"]    = $responseNodes;
           $main["links"]    = $responseLinks;
 
@@ -1238,7 +1238,7 @@ class UserController extends Controller
 
         $associates = $this->get_my_associates($poi->id);
         $parentObjs = PoiAssociate::where("associate_id",$id)->get();
-        
+
 
         $count               = 0;
         $parentResponseNodes = array();
@@ -1263,9 +1263,9 @@ class UserController extends Controller
              $linkObj->type         = $parent->association_type;
              $parentResponseNodes[] = $userObj;
              $parentResponseLinks[] = $linkObj;
-              
+
              $parent_associates     = $this->get_my_associates($parent->poi_id,$parent->associate_id);
-            
+
 
             foreach ($parent_associates['nodes'] as $assoc) {
 
@@ -1281,9 +1281,9 @@ class UserController extends Controller
             }
 
 
-          
+
         }
-        
+
         if(sizeof($associates["nodes"]) > 0) {
 
           $associates_nodes["nodes"] = array_merge($associates["nodes"],$main["nodes"]);
@@ -1339,7 +1339,7 @@ class UserController extends Controller
 
         }
 
-      
+
 
         return $associates_nodes;
 
@@ -1348,9 +1348,9 @@ class UserController extends Controller
     public function get_my_associates($poId,$exception = 0) {
 
       $objAssociates = PoiAssociate::where('poi_id',$poId)->get();
-     
+
        if ($exception > 0) {
-  
+
           $objAssociates = PoiAssociate::where('poi_id',$poId)->where('associate_id','<>',$exception)->get();
 
        }
@@ -1385,7 +1385,7 @@ class UserController extends Controller
 
                 $response["nodes"] = array_merge($responseNodes);
                 $response["links"] = array_merge($responseLinks);
-     
+
 
         } else {
 
@@ -1406,7 +1406,7 @@ class UserController extends Controller
 
         $numberAssoc = PoiAssociate::where('poi_id',$associate->associate_id)->get()->count();
 
-        
+
         $response              = array();
         $poiObj                = Poi::find($associate->associate_id);
         $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
@@ -1416,7 +1416,7 @@ class UserController extends Controller
         $userObj->picture      = $poipicture->poi_picture_url;
         $userObj->type         = $associate->association_type;
         $userObj->number_assoc = $numberAssoc;
-        
+
         $userObj->loaded       = TRUE;
         $linkObj               = new \stdClass();
         $linkObj->id           = $poiObj->id;
@@ -1427,14 +1427,14 @@ class UserController extends Controller
         $response["linkObj"]   = $linkObj;
 
         return $response;
-              
+
 
 
     }
 
     public function deleteAssociation(Request $request) {
 
-     
+
       $PoiAssociateObj = PoiAssociate::where("poi_id",$request['poi_id'])->where("associate_id",$request['associate_id'])->first();
       $PoiAssociateObj->delete();
 
@@ -1443,7 +1443,7 @@ class UserController extends Controller
 
     public function deleteCaseAssociation(Request $request) {
 
-  
+
       $PoiCaseAssociateObj = CasePoi::where("poi_id",$request['poi_id'])->where("case_id",$request['case_id'])->first();
       $PoiCaseAssociateObj->delete();
 
@@ -1474,7 +1474,7 @@ class UserController extends Controller
 
         }
 
-     
+
         return $data;
 
     }
@@ -1510,7 +1510,7 @@ class UserController extends Controller
         $user->administrative_area_level_1 = $request['administrative_area_level_1'];
         $user->postal_code                 = $request['postal_code'];
         $user->country                     = $request['country'];
-        $user->company                     = $request['company'];  
+        $user->company                     = $request['company'];
         $department                        = Department::where('slug','=',$request['department'])->first();
         $user->department                  = (sizeof($department) > 0)?$department->id:0;
         $position                          = Position::where('slug','=',$request['position'])->first();
@@ -1542,7 +1542,7 @@ class UserController extends Controller
             'password' =>$password,
         );
 
-    
+
 
         \Mail::send('emails.registrationConfirmation',$data, function($message) use ($user)
         {
@@ -1555,16 +1555,16 @@ class UserController extends Controller
 
     }
 
-    public function ak_img_resize($target, $newcopy, $w, $h, $ext) { 
+    public function ak_img_resize($target, $newcopy, $w, $h, $ext) {
 
-      list($w_orig, $h_orig) = getimagesize($target); 
-      $scale_ratio = $w_orig / $h_orig; 
-      if (($w / $h) > $scale_ratio) { 
-        $w = $h * $scale_ratio; 
-      } else { 
-        $h = $w / $scale_ratio; 
-      } 
-      $img = ""; 
+      list($w_orig, $h_orig) = getimagesize($target);
+      $scale_ratio = $w_orig / $h_orig;
+      if (($w / $h) > $scale_ratio) {
+        $w = $h * $scale_ratio;
+      } else {
+        $h = $w / $scale_ratio;
+      }
+      $img = "";
       $ext = strtolower($ext); if ($ext == "gif"){ $img = imagecreatefromgif($target); } else if($ext =="png"){ $img = imagecreatefrompng($target); } else { $img = imagecreatefromjpeg($target); } $tci = imagecreatetruecolor($w, $h); // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
       imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig); imagejpeg($tci, $newcopy, 80); }
 
@@ -1576,7 +1576,7 @@ class UserController extends Controller
     {
 
 
-  
+
         $poi->name               = $request['name'];
         $poi->surname            = $request['surname'];
         $poi->nickname           = $request['nickname'];
@@ -1589,7 +1589,7 @@ class UserController extends Controller
         $poi->religion           = $request['religion'];
         $poi->qualification_type = $request['qualification_type'];
         $poi->notice_period      = $request['notice_period'];
-       
+
 
 
         $position             = Position::where('slug','=',$request['position'])->first();
@@ -1600,7 +1600,7 @@ class UserController extends Controller
         }
         $language             = Language::where('slug','=',$request['language'])->first();
         $poi->language        = $language->id;
-       
+
         switch ($request['document_type']) {
           case '1':
             $poi->id_number       = $request['id_number'];
@@ -1618,8 +1618,8 @@ class UserController extends Controller
             $poi->yellow_fever_expiry_date = $request['yellow_fever_expiry_date'];
 
             break;
-          
-          
+
+
         }
 
       $poi->has_driver_licence = $request['has_driver_licence'];
@@ -1631,13 +1631,24 @@ class UserController extends Controller
 
       }
 
-    
+    $email ;
+
+     if ($request['email']==null)
+     {
+
+       $email  =  \Auth::user()->id."" .$request['surname']."@aimsfis.com";
+     }
+     else {
+       $email =    $request['email'];
+     }
+
+
         $poi->nationality = $request['nationality'];
         $poi->created_by  = \Auth::user()->id;
-        $poi->email       = $request['email'];
+        $poi->email       = $email;
         $poi->save();
-     
-  
+
+
         if (is_null($request['poi_profile_file'])) {
 
              $img_url                      = "images/poi/profile/no_photo.png";
@@ -1647,7 +1658,7 @@ class UserController extends Controller
              $poipicture->poi_picture_url  = $img_url;
              $poipicture->created_by       = \Auth::user()->id;
              $poipicture->save();
-           
+
 
         } else {
 
@@ -1659,7 +1670,7 @@ class UserController extends Controller
 
                 mkdir($target_file_directory);
 
-            } 
+            }
 
 
             if(is_dir($target_file_directory)) {
@@ -1669,7 +1680,7 @@ class UserController extends Controller
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 400;
                $hmax         = 400;
-               $kaboom       = explode(".", $file_name); 
+               $kaboom       = explode(".", $file_name);
                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["poi_profile_file"]["tmp_name"],$img_url)) {
@@ -1678,31 +1689,31 @@ class UserController extends Controller
 
                }
 
-            } 
+            }
 
 
               $poipicture                   = new PoiPicture();
               $poipicture->poi_id           = $poi->id;
               $poipicture->poi_picture_type = 1;
               $poipicture->poi_picture_url  = $img_url;
-              $poipicture->notes            = $request["profile_pic_note"];    
+              $poipicture->notes            = $request["profile_pic_note"];
               $poipicture->created_by       = \Auth::user()->id;
               $poipicture->save();
 
 
-         
+
         }
 
 
-       
+
        if($request['training_type']) {
 
           //Get Array Size
           $array_size = sizeof($request['training_type']);
 
-          for ($i=0; $i < $array_size ; $i++) { 
-            
-    
+          for ($i=0; $i < $array_size ; $i++) {
+
+
             $training_type                = new PoiTraining();
             $training_type->poi_id        = $poi->id;
             $training_type->training_type = $request['training_type'][$i];
@@ -1721,8 +1732,8 @@ class UserController extends Controller
           //Get Array Size
           $scar_array_size = sizeof($request['scar_file']);
 
-          for ($i=0; $i < $scar_array_size ; $i++) { 
-            
+          for ($i=0; $i < $scar_array_size ; $i++) {
+
             $file_name             = $_FILES['scar_file']['name'][$i];
             $img_url               = "images/poi/scars/$poi->id/".$file_name;
             $target_file_directory = "images/poi/scars/$poi->id/";
@@ -1731,7 +1742,7 @@ class UserController extends Controller
 
                 mkdir($target_file_directory);
 
-            } 
+            }
 
 
             if(is_dir($target_file_directory)) {
@@ -1762,7 +1773,7 @@ class UserController extends Controller
 
 
 
-            } 
+            }
 
           }
 
@@ -1774,8 +1785,8 @@ class UserController extends Controller
           //Get Array Size
           $scar_array_size = sizeof($request['tatoo_file']);
 
-          for ($i=0; $i < $scar_array_size ; $i++) { 
-            
+          for ($i=0; $i < $scar_array_size ; $i++) {
+
             $file_name             = $_FILES['tatoo_file']['name'][$i];
             $img_url               = "images/poi/tatoos/$poi->id/".$file_name;
             $target_file_directory = "images/poi/tatoos/$poi->id/";
@@ -1784,7 +1795,7 @@ class UserController extends Controller
 
                 mkdir($target_file_directory);
 
-            } 
+            }
 
 
             if(is_dir($target_file_directory)) {
@@ -1807,7 +1818,7 @@ class UserController extends Controller
                 $poipicture->poi_id           = $poi->id;
                 $poipicture->poi_picture_type = 3;
                 $poipicture->poi_picture_url  = $img_url;
-                $poipicture->notes            = $request['tatoo_pic_note'][$i];    
+                $poipicture->notes            = $request['tatoo_pic_note'][$i];
                 $poipicture->created_by       = \Auth::user()->id;
                 $poipicture->save();
 
@@ -1815,7 +1826,7 @@ class UserController extends Controller
 
 
 
-            } 
+            }
 
           }
 
@@ -1838,7 +1849,7 @@ class UserController extends Controller
 
                 mkdir($target_file_directory);
 
-            } 
+            }
 
 
             if(is_dir($target_file_directory)) {
@@ -1856,19 +1867,19 @@ class UserController extends Controller
 
                }
 
-            } 
+            }
 
 
               $poipicture                   = new PoiPicture();
               $poipicture->poi_id           = $poi->id;
               $poipicture->poi_picture_type = 4;
               $poipicture->poi_picture_url  = $img_url;
-              $poipicture->notes            = $request["id_pic_note"];    
+              $poipicture->notes            = $request["id_pic_note"];
               $poipicture->created_by       = \Auth::user()->id;
               $poipicture->save();
 
 
-         
+
         }
 
         if (is_null($request['poi_vehicle_file'])) {
@@ -1886,7 +1897,7 @@ class UserController extends Controller
 
                 mkdir($target_file_directory,0777,true);
 
-            } 
+            }
 
 
             if(is_dir($target_file_directory)) {
@@ -1904,26 +1915,26 @@ class UserController extends Controller
 
                }
 
-            } 
+            }
 
 
               $poipicture                   = new PoiPicture();
               $poipicture->poi_id           = $poi->id;
               $poipicture->poi_picture_type = 5;
               $poipicture->poi_picture_url  = $img_url;
-              $poipicture->notes            = "";    
+              $poipicture->notes            = "";
               $poipicture->created_by       = \Auth::user()->id;
               $poipicture->save();
 
 
-         
+
         }
 
 
         if(!is_null($request['drivers_licence'])) {
 
-                    for ($i=0; $i < sizeof($request['drivers_licence']) ; $i++) { 
-              
+                    for ($i=0; $i < sizeof($request['drivers_licence']) ; $i++) {
+
                   $PoiDriverLicence                              = new PoiDriverLicence();
                   $PoiDriverLicence->poi_id                      = $poi->id;
                   $PoiDriverLicence->driver_licence_code         = $request['drivers_licence'][$i];
@@ -1941,8 +1952,8 @@ class UserController extends Controller
         if(!is_null($request['landline'])) {
 
 
-            for ($i=0; $i < sizeof($request['landline']) ; $i++) { 
-                  
+            for ($i=0; $i < sizeof($request['landline']) ; $i++) {
+
                   $PoiContactNumber                 = new PoiContactNumber();
                   $PoiContactNumber->poi_id         = $poi->id;
                   $PoiContactNumber->contact_number = $request['landline'][$i];
@@ -1957,8 +1968,8 @@ class UserController extends Controller
         if(!is_null($request['mobile'])) {
 
 
-            for ($i=0; $i < sizeof($request['mobile']) ; $i++) { 
-                  
+            for ($i=0; $i < sizeof($request['mobile']) ; $i++) {
+
                   $PoiContactNumber                 = new PoiContactNumber();
                   $PoiContactNumber->poi_id         = $poi->id;
                   $PoiContactNumber->contact_number = $request['mobile'][$i];
@@ -1972,12 +1983,12 @@ class UserController extends Controller
 
         }
 
-       
+
         //Residential Address
        if(!is_null($request['resindential_line_1'])) {
 
 
-          for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) { 
+          for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) {
 
             $res_address          = new PoiAddress();
             $res_address->line_1  = $request['resindential_line_1'][$i];
@@ -1997,8 +2008,8 @@ class UserController extends Controller
       if(!is_null($request['workaddress_line_1'])) {
 
 
-            for ($i=0; $i < sizeof($request['workaddress_line_1']) ; $i++) { 
-                    
+            for ($i=0; $i < sizeof($request['workaddress_line_1']) ; $i++) {
+
                     $res_address          = new PoiAddress();
                     $res_address->company = $request['company'][$i];
                     $res_address->period  = $request['period'][$i];
@@ -2016,8 +2027,8 @@ class UserController extends Controller
 
         if(!is_null($request['travel_movement'])) {
 
-            for ($i=0; $i < sizeof($request['travel_movement']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['travel_movement']) ; $i++) {
+
                   $PoiTravelMovement             = new PoiTravelMovement();
                   $PoiTravelMovement->poi_id     = $poi->id;
                   $PoiTravelMovement->name       = $request['travel_movement'][$i];
@@ -2035,8 +2046,8 @@ class UserController extends Controller
 
          if(!is_null($request['account_number'])) {
 
-          for ($i=0; $i < sizeof($request['account_number']) ; $i++) { 
-            
+          for ($i=0; $i < sizeof($request['account_number']) ; $i++) {
+
                 $PoiBankDetail                 = new PoiBankDetail();
                 $PoiBankDetail->poi_id         = $poi->id;
                 $PoiBankDetail->account_number = $request['account_number'][$i];
@@ -2052,8 +2063,8 @@ class UserController extends Controller
 
         if(!is_null($request['crime_description'])) {
 
-          for ($i=0; $i < sizeof($request['crime_description']) ; $i++) { 
-            
+          for ($i=0; $i < sizeof($request['crime_description']) ; $i++) {
+
                 $PoiCriminalRecord                                      = new PoiCriminalRecord();
                 $PoiCriminalRecord->poi_id                              = $poi->id;
                 $PoiCriminalRecord->description                         = $request['crime_description'][$i];
@@ -2072,14 +2083,14 @@ class UserController extends Controller
 
         if(!is_null($request['vehicle_make'])) {
 
-              for ($i=0; $i < sizeof($request['vehicle_make']) ; $i++) { 
-                  
+              for ($i=0; $i < sizeof($request['vehicle_make']) ; $i++) {
+
                   $PoiVehicle                = new PoiVehicle();
                   $PoiVehicle->poi_id        = $poi->id;
                   $PoiVehicle->vehicle_make  = $request['vehicle_make'][$i];
                   $PoiVehicle->vehicle_color = $request['vehicle_color'][$i];
                   $PoiVehicle->vehicle_vin   = $request['vehicle_vin'][$i];
-                  $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];                   
+                  $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];
                   $PoiVehicle->created_by    = \Auth::user()->id;
                   $PoiVehicle->save();
 
@@ -2087,7 +2098,7 @@ class UserController extends Controller
 
 
         }
-  
+
         $poi->save();
         \Session::flash('success', $request['name'].' '.$request['surname'].' POI has been added successfully!');
 
@@ -2112,7 +2123,7 @@ class UserController extends Controller
                                         "
                                       )
                                 );
-                 
+
         return \Datatables::of($pois)
                             ->addColumn('actions','<a class="btn btn-xs btn-alt" href="edit-poi-user/{{$id}}" >View / Edit</a>
                                                    <a class="btn btn-xs btn-alt" href="view-poi-associates/{{$id}}" >View / Add Associates</a>
@@ -2161,16 +2172,16 @@ class UserController extends Controller
                                          (SELECT `slug` FROM `positions` WHERE `id` = `poi`.position) as 'position',
                                          poi.email,
                                          (SELECT `slug` FROM `languages` WHERE `id` = `poi`.language) as 'language'
-                                        
-                                      
-                                       
+
+
+
                                         "
                                       )
                             )->first();
 
 
 
-    
+
       //Determine if POI has Scar
       $poiscar = PoiPicture::where('poi_id',$id)
                               ->where('poi_picture_type',3)->count();
@@ -2208,10 +2219,10 @@ class UserController extends Controller
 
 
 
-    
 
 
-    
+
+
       //Determine if POI has tatoos
       $poitatoo = PoiPicture::where('poi_id',$id)
                               ->where('poi_picture_type',2)->count();
@@ -2232,7 +2243,7 @@ class UserController extends Controller
 
        if($poidriver > 0) {
 
-          $poidrivers          = PoiDriverLicence::where('poi_id',$id)->get();  
+          $poidrivers          = PoiDriverLicence::where('poi_id',$id)->get();
           $poi->driverslicence = $poidrivers;
 
 
@@ -2259,7 +2270,7 @@ class UserController extends Controller
 
        if($poicontactlandline > 0) {
 
-          $poilandines   = PoiContactNumber::where('poi_id',$id)->where('type',1)->get();  
+          $poilandines   = PoiContactNumber::where('poi_id',$id)->where('type',1)->get();
           $poi->landline = $poilandines;
 
 
@@ -2287,9 +2298,9 @@ class UserController extends Controller
                                          poi_pictures.poi_picture_url,
                                          poi_pictures.poi_picture_type,
                                          poi_pictures.id as vehicle_id
-                                       
-                                      
-                                       
+
+
+
                                         "
                                       )
                             )->get();
@@ -2306,7 +2317,7 @@ class UserController extends Controller
 
        if($poicontactmobile > 0) {
 
-          $poicontactmobiles = PoiContactNumber::where('poi_id',$id)->where('type',2)->get();  
+          $poicontactmobiles = PoiContactNumber::where('poi_id',$id)->where('type',2)->get();
           $poi->mobilenumber = $poicontactmobiles;
 
 
@@ -2317,7 +2328,7 @@ class UserController extends Controller
 
        if($poiresidendialaddress > 0) {
 
-          $residendialaddress = PoiAddress::where('poi_id',$id)->where('type',1)->get();  
+          $residendialaddress = PoiAddress::where('poi_id',$id)->where('type',1)->get();
           $poi->residential   = $residendialaddress;
 
 
@@ -2327,7 +2338,7 @@ class UserController extends Controller
        $poiworkaddress = PoiAddress::where('poi_id',$id)->where('type',2)->count();
        if($poiworkaddress > 0) {
 
-          $workaddress = PoiAddress::where('poi_id',$id)->where('type',2)->get();  
+          $workaddress = PoiAddress::where('poi_id',$id)->where('type',2)->get();
           $poi->work   = $workaddress;
 
        }
@@ -2336,7 +2347,7 @@ class UserController extends Controller
        $poitravelmovement = PoiTravelMovement::where('poi_id',$id)->count();
        if($poitravelmovement > 0) {
 
-          $travel = PoiTravelMovement::where('poi_id',$id)->get();  
+          $travel = PoiTravelMovement::where('poi_id',$id)->get();
           $poi->travelmovement   = $travel;
 
        }
@@ -2345,7 +2356,7 @@ class UserController extends Controller
        $PoiCriminalRecord = PoiCriminalRecord::where('poi_id',$id)->count();
        if($PoiCriminalRecord > 0) {
 
-          $criminal = PoiCriminalRecord::where('poi_id',$id)->get();  
+          $criminal = PoiCriminalRecord::where('poi_id',$id)->get();
           $poi->criminal_records   = $criminal;
 
        }
@@ -2355,7 +2366,7 @@ class UserController extends Controller
        $PoiTraining = PoiTraining::where('poi_id',$id)->count();
        if($PoiTraining > 0) {
 
-          $training       = PoiTraining::where('poi_id',$id)->get();  
+          $training       = PoiTraining::where('poi_id',$id)->get();
           $poi->trainings = $training;
 
        }
@@ -2367,7 +2378,7 @@ class UserController extends Controller
 
     public function view_poi_associates($id) {
 
-  
+
     $poi = \DB::table('poi')
                         ->join('poi_pictures', 'poi.id', '=', 'poi_pictures.poi_id')
                         ->where('poi.id','=',$id)
@@ -2391,9 +2402,9 @@ class UserController extends Controller
                                          poi.has_driver_licence,
                                          poi.email,
                                          (SELECT `slug` FROM `languages` WHERE `id` = `poi`.language) as 'language'
-                                        
-                                      
-                                       
+
+
+
                                         "
                                       )
                             )->first();
@@ -2422,7 +2433,7 @@ class UserController extends Controller
 
       if($poi__associate_query > 0) {
 
-         
+
           $associates = PoiAssociate::where('poi_id',$id)->get();
 
           foreach ($associates as $associate) {
@@ -2440,7 +2451,7 @@ class UserController extends Controller
                   $sub_associates = PoiAssociate::where('poi_id',$associate->associate_id)->get();
 
                   foreach ($sub_associates as $sub_associate) {
-                    
+
                      $sub_assoc_pic_object                  = PoiPicture::where('poi_id',$sub_associate->associate_id)->first();
                      $sub_assoc_poi_object                  = Poi::find($sub_associate->associate_id);
                      $sub_assoc_poi_object->poi_picture_url = $sub_assoc_pic_object->poi_picture_url;
@@ -2460,8 +2471,8 @@ class UserController extends Controller
           $poi->assoc = $results;
 
       }
-       
-        
+
+
         return view('users.poiassociates')->with('poi',$poi);
 
 
@@ -2471,7 +2482,7 @@ class UserController extends Controller
 
         $case = CaseReport::find($case_id);
         return view('users.casepoiassociates')->with('case',$case);
-    
+
     }
 
 
@@ -2479,14 +2490,14 @@ class UserController extends Controller
 
         $poi = Poi::find($poi_id);
         return view('users.casestopeople')->with('poi',$poi);
-    
+
     }
 
 
     public function edit_poi_save(Request $request) {
 
-     
-        
+
+
 
         $poi                     = Poi::find($request['poiID']);
         $poi->name               = $request['name'];
@@ -2523,7 +2534,7 @@ class UserController extends Controller
           $poipicture->save();
         }
 
-   
+
 
         if($request['language'] == '0') {
 
@@ -2531,7 +2542,7 @@ class UserController extends Controller
         }
         $language             = Language::where('slug','=',$request['language'])->first();
         $poi->language        = $language->id;
-       
+
 
         $poi->save();
 
@@ -2544,13 +2555,13 @@ class UserController extends Controller
             $target_file_directory = "images/poi/profile/$poi->id/";
 
 
-            
+
 
             if(!is_dir($target_file_directory)) {
 
                 mkdir($target_file_directory);
 
-            } 
+            }
 
 
             if(is_dir($target_file_directory)) {
@@ -2560,7 +2571,7 @@ class UserController extends Controller
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $kaboom       = explode(".", $file_name); 
+               $kaboom       = explode(".", $file_name);
                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["poi_profile_file"]["tmp_name"],$img_url)) {
@@ -2569,16 +2580,16 @@ class UserController extends Controller
 
                }
 
-            } 
+            }
 
-           
+
             if($request['poiProfileID'] == "") {
 
 
                   $exist_profile_pic = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',1)->first();
                   $exist_profile_pic->delete();
 
-                 
+
                   $poipicture                   = new PoiPicture();
                   $poipicture->poi_id           = $poi->id;
                   $poipicture->poi_picture_type = 1;
@@ -2587,7 +2598,7 @@ class UserController extends Controller
                   $poipicture->created_by       = \Auth::user()->id;
                   $poipicture->save();
 
-              
+
             } else {
 
 
@@ -2598,11 +2609,11 @@ class UserController extends Controller
                 $poipicture->save();
 
             }
-            
 
 
 
-         
+
+
         }
 
 
@@ -2615,8 +2626,8 @@ class UserController extends Controller
           //Check Scars in DB
           $scars_key   = array();
           $scars_in_db = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',3)->get();
-          
-       
+
+
 
           if(sizeof($scars_in_db) > 0) {
 
@@ -2624,18 +2635,18 @@ class UserController extends Controller
           }
 
           foreach ($scars_in_db as $scar_in_db) {
-            
+
               $scars_key[] = $scar_in_db->id;
 
           }
 
-        
 
-          for ($i=0; $i < $scar_array_size ; $i++) { 
+
+          for ($i=0; $i < $scar_array_size ; $i++) {
 
 
                       $file_name             = $_FILES['scar_file']['name'][$i];
-           
+
                         if(is_array($file_name)) {
 
                         $key                   = key($file_name);
@@ -2651,18 +2662,18 @@ class UserController extends Controller
                         $poipicture = PoiPicture::find($key);
                         $poipicture->notes = $request['scar_pic_note'][$i];
                         $poipicture->save();
-                       
-                      
+
+
                           if($file_name_scar <> "") {
 
                               if(!is_dir($target_file_directory)) {
 
                                   mkdir($target_file_directory);
 
-                              } 
+                              }
 
                               if(is_dir($target_file_directory)) {
-            
+
                                  $target_file  = $target_file_directory.$file_name_scar;
                                  $resized_file = $target_file_directory.$file_name_scar;
                                  $wmax         = 600;
@@ -2679,11 +2690,11 @@ class UserController extends Controller
                                  $poipicture->poi_picture_url = $img_url;
                                  $poipicture->save();
                               }
-                         
 
-                         
 
-                          } 
+
+
+                          }
 
 
                         } else {
@@ -2697,7 +2708,7 @@ class UserController extends Controller
 
                                 mkdir($target_file_directory);
 
-                            } 
+                            }
 
 
                             if(is_dir($target_file_directory)) {
@@ -2731,25 +2742,25 @@ class UserController extends Controller
 
 
 
-                            } 
+                            }
 
 
                         }
-          
+
 
           }
 
 
           if($scars_key) {
 
-  
+
               foreach ($scars_key as $value) {
-  
+
                   $picture = PoiPicture::find($value);
                   $picture->delete();
               }
           }
-          
+
 
 
 
@@ -2767,15 +2778,15 @@ class UserController extends Controller
           $tatoos_key   = array();
 
           foreach ($tatoos_in_db as $tatoo_in_db) {
-            
+
               $tatoos_key[] = $tatoo_in_db->id;
 
           }
 
-          for ($i=0; $i < $tatoo_array_size ; $i++) { 
-            
+          for ($i=0; $i < $tatoo_array_size ; $i++) {
+
                       $file_name             = $_FILES['tatoo_file']['name'][$i];
-           
+
                         if(is_array($file_name)) {
 
                         $key                   = key($file_name);
@@ -2791,8 +2802,8 @@ class UserController extends Controller
                         $poipicture = PoiPicture::find($key);
                         $poipicture->notes = $request['tatoo_pic_note'][$i];
                         $poipicture->save();
-                       
-                      
+
+
                           if($file_name_tatoo <> "") {
 
 
@@ -2801,7 +2812,7 @@ class UserController extends Controller
 
                                   mkdir($target_file_directory);
 
-                              } 
+                              }
 
                               if(is_dir($target_file_directory)) {
 
@@ -2822,11 +2833,11 @@ class UserController extends Controller
                                  $poipicture->poi_picture_url = $img_url;
                                  $poipicture->save();
                               }
-                         
 
-                         
 
-                          } 
+
+
+                          }
 
 
                         } else {
@@ -2841,7 +2852,7 @@ class UserController extends Controller
 
                                 mkdir($target_file_directory);
 
-                            } 
+                            }
 
 
                             if(is_dir($target_file_directory)) {
@@ -2869,25 +2880,25 @@ class UserController extends Controller
                                 $poipicture->save();
 
 
-                            } 
+                            }
 
 
                         }
-          
+
 
           }
 
 
           if($tatoos_key) {
 
-  
+
               foreach ($tatoos_key as $value) {
-  
+
                   $picture = PoiPicture::find($value);
                   $picture->delete();
               }
           }
-          
+
 
 
 
@@ -2905,15 +2916,15 @@ class UserController extends Controller
           $vehicles_key   = array();
 
           foreach ($vehicles_in_db as $vehicle_in_db) {
-            
+
               $vehicles_key[] = $vehicle_in_db->id;
 
           }
 
-          for ($i=0; $i < $vehicles_array_size ; $i++) { 
-            
+          for ($i=0; $i < $vehicles_array_size ; $i++) {
+
                       $file_name             = $_FILES['poi_vehicle_file']['name'][$i];
-           
+
                         if(is_array($file_name)) {
 
                         $key                   = key($file_name);
@@ -2926,8 +2937,8 @@ class UserController extends Controller
                         $img_url               = "images/poi/VEHICLES/$key/".$file_name_tatoo;
                         $target_file_directory = "images/poi/VEHICLES/$key/";
 
-                       
-                      
+
+
                           if($file_name_tatoo <> "") {
 
 
@@ -2936,7 +2947,7 @@ class UserController extends Controller
 
                                   mkdir($target_file_directory);
 
-                              } 
+                              }
 
                               if(is_dir($target_file_directory)) {
 
@@ -2957,11 +2968,11 @@ class UserController extends Controller
                                  $poipicture->poi_picture_url = $img_url;
                                  $poipicture->save();
                               }
-                         
 
-                         
 
-                          } 
+
+
+                          }
 
 
                         } else {
@@ -2976,7 +2987,7 @@ class UserController extends Controller
 
                                 mkdir($target_file_directory);
 
-                            } 
+                            }
 
 
                             if(is_dir($target_file_directory)) {
@@ -3004,25 +3015,25 @@ class UserController extends Controller
                                 $poipicture->save();
 
 
-                            } 
+                            }
 
 
                         }
-          
+
 
           }
 
 
           if($vehicles_key) {
 
-  
+
               foreach ($vehicles_key as $value) {
-  
+
                   $picture = PoiPicture::find($value);
                   $picture->delete();
               }
           }
-          
+
 
 
 
@@ -3039,7 +3050,7 @@ class UserController extends Controller
 
                 mkdir($target_file_directory);
 
-            } 
+            }
 
 
             if(is_dir($target_file_directory)) {
@@ -3049,7 +3060,7 @@ class UserController extends Controller
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $kaboom       = explode(".", $file_name); 
+               $kaboom       = explode(".", $file_name);
                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["poi_doc_file"]["tmp_name"],$img_url)) {
@@ -3058,9 +3069,9 @@ class UserController extends Controller
 
                }
 
-            } 
+            }
 
-            
+
 
 
             if($request['poiPicID'] == "") {
@@ -3072,9 +3083,9 @@ class UserController extends Controller
                     $exist_id_pic->delete();
 
                   }
-                 
-                  
-                 
+
+
+
                   $poipicture                   = new PoiPicture();
                   $poipicture->poi_id           = $poi->id;
                   $poipicture->poi_picture_type = 4;
@@ -3083,7 +3094,7 @@ class UserController extends Controller
                   $poipicture->created_by       = \Auth::user()->id;
                   $poipicture->save();
 
-              
+
             } else {
 
                 $poipicture                  = PoiPicture::find($request['poiPicID']);
@@ -3093,7 +3104,7 @@ class UserController extends Controller
 
             }
 
-         
+
         }
 
 
@@ -3105,7 +3116,7 @@ class UserController extends Controller
           if (sizeof($existing_drivers) > 0) {
 
               foreach ($existing_drivers as $existing_driver) {
-                
+
                   $driver_object = PoiDriverLicence::find($existing_driver->id);
                   $driver_object->delete();
               }
@@ -3114,8 +3125,8 @@ class UserController extends Controller
 
 
 
-            for ($i=0; $i < sizeof($request['drivers_licence']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['drivers_licence']) ; $i++) {
+
                   $PoiDriverLicence                              = new PoiDriverLicence();
                   $PoiDriverLicence->poi_id                      = $poi->id;
                   $PoiDriverLicence->driver_licence_code         = $request['drivers_licence'][$i];
@@ -3136,7 +3147,7 @@ class UserController extends Controller
           if (sizeof($existing_vehicles) > 0) {
 
               foreach ($existing_vehicles as $existing_vehicle) {
-                
+
                   $vehicle_object = PoiVehicle::find($existing_vehicle->id);
                   $vehicle_object->delete();
               }
@@ -3145,14 +3156,14 @@ class UserController extends Controller
 
 
 
-            for ($i=0; $i < sizeof($request['vehicle_make']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['vehicle_make']) ; $i++) {
+
                   $PoiVehicle                = new PoiVehicle();
                   $PoiVehicle->poi_id        = $poi->id;
                   $PoiVehicle->vehicle_make  = $request['vehicle_make'][$i];
                   $PoiVehicle->vehicle_color = $request['vehicle_color'][$i];
                   $PoiVehicle->vehicle_vin   = $request['vehicle_vin'][$i];
-                  $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];                   
+                  $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];
                   $PoiVehicle->created_by    = \Auth::user()->id;
                   $PoiVehicle->save();
 
@@ -3168,7 +3179,7 @@ class UserController extends Controller
           if (sizeof($existing_trainings) > 0) {
 
               foreach ($existing_trainings as $existing_training) {
-                
+
                   $training_object = PoiTraining::find($existing_training->id);
                   $training_object->delete();
               }
@@ -3177,8 +3188,8 @@ class UserController extends Controller
 
 
 
-            for ($i=0; $i < sizeof($request['training_type']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['training_type']) ; $i++) {
+
                 $training_type                = new PoiTraining();
                 $training_type->poi_id        = $poi->id;
                 $training_type->training_type = $request['training_type'][$i];
@@ -3202,7 +3213,7 @@ class UserController extends Controller
           if (sizeof($existing_landlines) > 0) {
 
               foreach ($existing_landlines as $existing_landline) {
-                
+
                   $driver_object = PoiContactNumber::find($existing_landline->id);
                   $driver_object->delete();
               }
@@ -3211,8 +3222,8 @@ class UserController extends Controller
 
 
 
-            for ($i=0; $i < sizeof($request['landline']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['landline']) ; $i++) {
+
                   $PoiContactNumber                 = new PoiContactNumber();
                   $PoiContactNumber->poi_id         = $poi->id;
                   $PoiContactNumber->contact_number = $request['landline'][$i];
@@ -3232,15 +3243,15 @@ class UserController extends Controller
           if (sizeof($existing_landlines) > 0) {
 
               foreach ($existing_landlines as $existing_landline) {
-                
+
                   $driver_object = PoiContactNumber::find($existing_landline->id);
                   $driver_object->delete();
               }
 
           }
 
-            for ($i=0; $i < sizeof($request['mobile']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['mobile']) ; $i++) {
+
                   $PoiContactNumber                 = new PoiContactNumber();
                   $PoiContactNumber->poi_id         = $poi->id;
                   $PoiContactNumber->contact_number = $request['mobile'][$i];
@@ -3254,8 +3265,8 @@ class UserController extends Controller
 
         }
 
-     
- 
+
+
          if(!is_null($request['company'])) {
 
           //Find existing driving licence info
@@ -3271,8 +3282,8 @@ class UserController extends Controller
 
           }
 
-            for ($i=0; $i < sizeof($request['company']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['company']) ; $i++) {
+
                     $res_address          = new PoiAddress();
                     $res_address->company = $request['company'][$i];
                     $res_address->period  = $request['period'][$i];
@@ -3286,7 +3297,7 @@ class UserController extends Controller
 
             }
 
-            
+
 
         }
 
@@ -3299,7 +3310,7 @@ class UserController extends Controller
           if (sizeof($existing_residential_address) > 0) {
 
               foreach ($existing_residential_address as $residential_address) {
-                
+
                   $object = PoiAddress::find($residential_address->id);
                   $object->delete();
               }
@@ -3307,7 +3318,7 @@ class UserController extends Controller
           }
 
 
-          for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) { 
+          for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) {
 
               $res_address          = new PoiAddress();
               $res_address->line_1  = $request['resindential_line_1'][$i];
@@ -3330,15 +3341,15 @@ class UserController extends Controller
           if (sizeof($existing_travel_movement) > 0) {
 
               foreach ($existing_travel_movement as $travel_movement) {
-                
+
                   $object = PoiTravelMovement::find($travel_movement->id);
                   $object->delete();
               }
 
           }
 
-            for ($i=0; $i < sizeof($request['travel_movement']) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($request['travel_movement']) ; $i++) {
+
                   $PoiTravelMovement                  = new PoiTravelMovement();
                   $PoiTravelMovement->poi_id          = $poi->id;
                   $PoiTravelMovement->name            = $request['travel_movement'][$i];
@@ -3350,7 +3361,7 @@ class UserController extends Controller
 
             }
 
-              
+
 
 
 
@@ -3363,15 +3374,15 @@ class UserController extends Controller
           if (sizeof($existing_criminal_records) > 0) {
 
               foreach ($existing_criminal_records as $criminal_record) {
-                
+
                   $object = PoiCriminalRecord::find($criminal_record->id);
                   $object->delete();
               }
 
           }
 
-          for ($i=0; $i < sizeof($request['crime_description']) ; $i++) { 
-            
+          for ($i=0; $i < sizeof($request['crime_description']) ; $i++) {
+
                 $PoiCriminalRecord                                      = new PoiCriminalRecord();
                 $PoiCriminalRecord->poi_id                              = $poi->id;
                 $PoiCriminalRecord->description                         = $request['crime_description'][$i];
@@ -3393,9 +3404,9 @@ class UserController extends Controller
 
 
 
-      
 
-        
+
+
 
         \Session::flash('flash_message','Profile successfully updated.');
 
@@ -3433,8 +3444,8 @@ class UserController extends Controller
       $userObj = User::find($id);
 
       $user = \DB::table('users')
-                                      
-                                    
+
+
                                       ->where('users.id','=',$id)
                                       ->select(
                                                 \DB::raw("
@@ -3537,7 +3548,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request)
     {
-        
+
         $user                              = User::where('id',$request['userID'])->first();
         $sendSMS                           = $user->status;
         $role                              = UserRole::where('slug','=',$request['role'])->first();
@@ -3557,7 +3568,7 @@ class UserController extends Controller
         $user->locality                    = $request['locality'];
         $user->administrative_area_level_1 = $request['administrative_area_level_1'];
         $user->postal_code                 = $request['postal_code'];
-        $user->country                     = $request['country'];  
+        $user->country                     = $request['country'];
         $department                        = Department::where('slug','=',$request['department'])->first();
         $user->department                  = (sizeof($department) > 0)?$department->id:0;
         $position                          = Position::where('slug','=',$request['position'])->first();
@@ -3565,7 +3576,7 @@ class UserController extends Controller
         $user->area                        = $request['area'];
         $user->api_key                     = uniqid();
         $user->created_by                  = \Auth::user()->id;
-        
+
         if ($request['affiliation']) {
 
             $user->affiliation       = $request['affiliation'];
@@ -3644,7 +3655,7 @@ class UserController extends Controller
     {
         $searchString   = \Input::get('q');
         $users          = \DB::table('users')
-            
+
             ->join('users_roles','users.role','=','users_roles.id')
             ->whereRaw(
                             "CONCAT(`users`.`name`, ' ', `users`.`surname`, ' ', `users`.`cellphone`) LIKE '%{$searchString}%'")
@@ -3660,7 +3671,7 @@ class UserController extends Controller
                                 'users.cellphone as cellphone',
                                 'users.area as area',
                                 'users.company as company'
-                             
+
 
 
                             )
@@ -3683,7 +3694,7 @@ class UserController extends Controller
 
 
 
-                               
+
 
 
                             );
@@ -3696,14 +3707,14 @@ class UserController extends Controller
     {
         $searchString   = \Input::get('q');
         $pois           = \DB::table('poi')
-           
+
             ->whereRaw(
                             "CONCAT(`poi`.`name`,' ', `poi`.`surname`) LIKE '%{$searchString}%'")
             ->select(
                         array(
                                 'poi.id as id',
                                 'poi.name as name',
-                                'poi.surname as surname'           
+                                'poi.surname as surname'
 
 
                             )
@@ -3718,7 +3729,7 @@ class UserController extends Controller
             $data[] = array(
                                 "name"              => "{$poi->name} > {$poi->surname}",
                                 "id"                => "{$poi->id}"
-                               
+
 
 
                             );
@@ -3732,14 +3743,14 @@ class UserController extends Controller
     {
         $searchString = \Input::get('q');
         $cases        = \DB::table('cases')
-           
+
             ->whereRaw(
                             "CONCAT(`cases`.`description`,' ', `cases`.`id`) LIKE '%{$searchString}%'")
             ->select(
                         array(
                                 'cases.id as id',
                                 'cases.description as name',
-                                        
+
 
 
                             )
@@ -3754,7 +3765,7 @@ class UserController extends Controller
             $data[] = array(
                                 "name"              => "Case Number: {$case->id} > Description : {$case->name}",
                                 "id"                => "{$case->id}"
-                               
+
 
 
                             );
@@ -3933,7 +3944,7 @@ class UserController extends Controller
 
     public function poimap($poi_id) {
 
-      $movements      = array();     
+      $movements      = array();
       $poi_travements = PoiTravelMovement::where('poi_id',$poi_id)->get();
 
       return view('users.poimap',compact('poi_travements'));

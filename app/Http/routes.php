@@ -45,6 +45,10 @@ $this->post('dosignup', 'Auth\LoginController@dosignup');
 
 Route::group(array('prefix' => 'api/v1'), function() {
   
+
+  
+ Route::Post  ('reportercase', 'CreatCaseMobileController@create');
+ 
   Route::post('logi', 'UserController@login');
   Route::post('pedingcases', 'ReportController@Pendingcases');
   Route::post('allocatecase','ReportController@Allocatercase');
@@ -54,6 +58,8 @@ Route::group(array('prefix' => 'api/v1'), function() {
   Route::post('declinsecase','ReportController@Declinsecase');
   Route::get('categoriess', 'DepartController@index');
   Route::get('myreport', 'ReportCController@myReport');
+  Route::get('tetsreport' ,'ReportCController@tetsreport');
+   
   Route::post('report', 'ReportController@store');
   Route::get('messagenofication','CaseNotesController@messagenofication');
   Route::post('mobilecaeCreate','MobliCasesController@mobilecaeCreate');

@@ -926,6 +926,38 @@ public   function   updatecasemobile  (){
 
 
 
+	public  function  tetsreport() {
+		
+		  $myReports = \DB::table('cases')
+
+         //  ->join('cases_types', 'cases.case_type', '=', 'cases_types.id')
+            //    ->join('sub_categories', 'cases.sub_category', '=', 'sub_categories.id')
+          // ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+         //  ->join('cases_priorities', 'cases.priority', '=', 'cases_priorities.id')
+              //  ->leftjoin('sub_sub_categories', 'cases.sub_sub_category', '=', 'sub_sub_categories.id')
+           ->join('users', 'cases.user', '=', 'users.id')
+           ->where('cases.user','=',10)
+			//	->where('cases.status','=',1)
+           ->select(\DB::raw("
+                cases.id ,
+                cases.created_at ,
+				cases.gps_lat,
+				cases.gps_lng,
+			
+				cases.description,
+				cases.img_url 
+               
+				"))
+               ->groupBy('cases.created_at')->get();
+			   
+			   
+			   return $myReports ; 
+		
+		
+	}
+	
+	
+	
 
 
     public function myReport(Report $report , Request $request)
